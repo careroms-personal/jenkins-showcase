@@ -11,7 +11,7 @@ extraObjects:
       persistentVolumeReclaimPolicy: Retain
       storageClassName: manual
       hostPath:
-        path: /data
+        path: /data/argocd-repo-server
   - apiVersion: v1
     kind: PersistentVolumeClaim
     metadata:
@@ -24,3 +24,9 @@ extraObjects:
       resources:
         requests:
           storage: 50Gi
+
+repoServer:
+  existingVolumes:
+    helmWorkingDir:
+      persistentVolumeClaim:
+        claimName: argocd-repo-server-pvc

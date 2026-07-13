@@ -1,0 +1,17 @@
+extraObjects:
+  - apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: jenkins-home-pv
+    spec:
+      capacity:
+        storage: 50Gi
+      accessModes:
+        - ReadWriteOnce
+      persistentVolumeReclaimPolicy: Retain
+      storageClassName: manual
+      hostPath:
+        path: /data/jenkins-home
+
+persistence:
+  storageClass: manual
