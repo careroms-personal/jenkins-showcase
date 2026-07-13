@@ -1,0 +1,26 @@
+extraObjects:
+  - apiVersion: v1
+    kind: PersistentVolume
+    metadata:
+      name: argocd-repo-server-pv
+    spec:
+      capacity:
+        storage: 50Gi
+      accessModes:
+        - ReadWriteOnce
+      persistentVolumeReclaimPolicy: Retain
+      storageClassName: manual
+      hostPath:
+        path: /data
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: argocd-repo-server-pvc
+      namespace: argocd
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: manual
+      resources:
+        requests:
+          storage: 50Gi
