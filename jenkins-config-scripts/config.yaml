@@ -1,0 +1,9 @@
+server:
+  url: http://localhost:48080
+  auth:
+    username: jenkins
+    password: jenkins-showcase
+
+configDirs:
+  # - "k8sAgents"
+  - jobs

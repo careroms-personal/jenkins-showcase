@@ -1,0 +1,10 @@
+cloud_name: "kubernetes"
+templates:
+  - name: "ubuntu"
+    label: "ubuntu"
+    container_name: "ubuntu"
+    image: "ubuntu:latest"
+    command: "sleep"
+    args: "999999"
+    privileged: true
+    mountPath: "/var/lib/containers"
