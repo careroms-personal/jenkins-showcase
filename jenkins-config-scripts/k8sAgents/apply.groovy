@@ -3,9 +3,23 @@ import conn.JenkinsConnection
 import http.JenkinsApi
 
 def buildGroovyScript(String cloudName, Map template) {
+    def secretEnvVarsGroovy = ""
+    if (template.secretEnvVars) {
+        def entries = template.secretEnvVars.collect { e ->
+            "new SecretEnvVar('${e.envVar}', '${e.secretName}', '${e.secretKey}', false)"
+        }.join(",\n            ")
+
+        secretEnvVarsGroovy = """
+        container.envVars = [
+            ${entries}
+        ]
+        """
+    }
+
     """
         import org.csanchez.jenkins.plugins.kubernetes.*
         import org.csanchez.jenkins.plugins.kubernetes.volumes.EmptyDirVolume
+        import org.csanchez.jenkins.plugins.kubernetes.model.SecretEnvVar
         import jenkins.model.Jenkins
 
         def cloud = Jenkins.instance.clouds.find { it.name == '${cloudName}' } as KubernetesCloud
@@ -21,6 +35,7 @@ def buildGroovyScript(String cloudName, Map template) {
         container.command = '${template.command}'
         container.args = '${template.args}'
         container.privileged = ${template.privileged}
+        ${secretEnvVarsGroovy}
 
         def podTemplate = new PodTemplate()
         podTemplate.name = '${template.name}'

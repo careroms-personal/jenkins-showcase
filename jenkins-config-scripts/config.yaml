@@ -5,5 +5,5 @@ server:
     password: jenkins-showcase
 
 configDirs:
-  # - "k8sAgents"
+  - "k8sAgents"
   - jobs

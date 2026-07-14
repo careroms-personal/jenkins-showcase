@@ -53,7 +53,11 @@ def apply(JenkinsConnection conn, String baseDir) {
         if (folderPath && !JenkinsApi.folderExists(client, conn, folderPath)) {
             println "Creating Jenkins folder: ${folderPath}"
             def folderResp = JenkinsApi.createFolder(client, conn, crumb, folderPath)
-            println "  -> ${folderResp.statusCode()}"
+            if (folderResp != null) {
+                println "  -> ${folderResp.statusCode()}"
+            } else {
+                println "  -> (no request sent, folder segments already existed)"
+            }
         }
 
         if (JenkinsApi.jobExistsInFolder(client, conn, folderPath, jobName)) {
