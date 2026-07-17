@@ -1,6 +1,8 @@
 configuration-as-code: {
   }
 credentials:
+  blueOcean: {
+    }
   folder: {
     }
   providerImpl: {
@@ -93,14 +95,78 @@ jenkins:
           command: "sleep"
           image: "ubuntu:latest"
           name: "ubuntu"
+        id: "1e77a306-3958-486c-90bd-c5bf1450d861"
         label: "general-job"
         name: "general-job"
+  - kubernetes:
+      containerCap: 10
+      containerCapStr: "10"
+      jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:50000"
+      jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
+      name: "k8s-2"
+      namespace: "jenkins"
+      podLabels:
+      - key: "jenkins/jenkins-jenkins-agent"
+        value: "true"
+      serverUrl: "https://kubernetes.default"
+      templates:
+      - containers:
+        - args: "9999999"
+          command: "sleep"
+          image: "ubuntu:latest"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "ubuntu"
+          workingDir: "/home/jenkins/agent"
+        - args: "9999999"
+          command: "sleep"
+          image: "gcr.io/kaniko-project/executor:debug"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "kaniko"
+          privileged: true
+          workingDir: "/home/jenkins/agent"
+        - args: "9999999"
+          command: "sleep"
+          image: "alpine/helm:latest"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "helm"
+          workingDir: "/home/jenkins/agent"
+        id: "dbeb7774-e3ff-44be-b6d2-1ac70cc3f1ff"
+        label: "general-pipeline"
+        name: "general-pipeline"
+        namespace: "jenkins"
+        serviceAccount: "jenkins-deployer"
+        volumes:
+        - emptyDirVolume:
+            memory: false
+            mountPath: "/workspace"
+        - secretVolume:
+            mountPath: "/kaniko/.docker"
+            optional: false
+            secretName: "personal-dockerhub"
+        yamlMergeStrategy: "override"
   crumbIssuer: "standard"
   disableRememberMe: false
   disabledAdministrativeMonitors:
   - "hudson.diagnosis.ReverseProxySetupMonitor"
   labelAtoms:
   - name: "built-in"
+  - name: "general-job"
+  - name: "general-pipeline"
   - name: "helm-deploy"
   - name: "image-builder"
   - name: "jenkins-jenkins-agent"
@@ -135,8 +201,8 @@ jenkins:
       users:
       - id: "admin"
         name: "Jenkins Admin"
-        password: "${chart-admin-password}"
         properties:
+        - "favorite"
         - "consoleUrlProvider"
         - "viewsTabBar"
         - "mailer"
@@ -147,6 +213,21 @@ jenkins:
         - "timezone"
         - "experimentalFlags"
         - "apiToken"
+      - id: "jenkins"
+        name: "jenkins"
+        properties:
+        - "apiToken"
+        - "consoleUrlProvider"
+        - "viewsTabBar"
+        - myView:
+            viewsTabBar: "standard"
+        - preferredProvider:
+            providerId: "default"
+        - "timezone"
+        - "experimentalFlags"
+        - mailer:
+            emailAddress: "jenkins@jenkins.com"
+        - "favorite"
   slaveAgentPort: 50000
   systemMessage: "test from diagnose script"
   updateCenter:
@@ -197,6 +278,16 @@ unclassified:
     }
   artifactManager: {
     }
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketCloudEndpoint:
+        enableCache: false
+        repositoriesCacheDuration: 0
+        teamCacheDuration: 0
+        webhook:
+          cloudWebhook:
+            enableHookSignature: false
+            manageHooks: false
   buildDiscarders:
     configuredBuildDiscarders:
     - "jobBuildDiscarder"
@@ -215,12 +306,18 @@ unclassified:
   fingerprints:
     fingerprintCleanupDisabled: false
     storage: "file"
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleForNormalize
+  gitHubPluginConfig:
+    hookUrl: "http://jenkins:8080/github-webhook/"
   globalDefaultFlowDurabilityLevel: {
     }
   globalLibraries: {
     }
   globalUntrustedLibraries: {
     }
+  junitTestResultStorage:
+    storage: "file"
   location:
     adminAddress: "address not configured yet <nobody@nowhere>"
     url: "http://jenkins:8080/"
