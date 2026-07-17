@@ -1,0 +1,125 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jenkins-deployer
+  namespace: jenkins
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins-deployer-binding
+  namespace: default
+subjects:
+  - kind: ServiceAccount
+    name: jenkins-deployer
+    namespace: jenkins
+roleRef:
+  kind: ClusterRole
+  name: edit
+  apiGroup: rbac.authorization.k8s.io
+---
+# Cluster-wide "manage everything except nodes" role.
+#
+# RBAC has no deny rules, so `resources: ["*"]` under `apiGroups: ["*"]` cannot
+# be made to exclude "nodes" -- that combination matches every group/resource
+# pair, nodes included. The only correct way to exclude it is to NOT wildcard
+# the core ("") API group: the core group is listed explicitly (every resource
+# and subresource from `kubectl get --raw /api/v1`, minus nodes/nodes-proxy/
+# nodes-status), while every other installed API group is wildcarded freely,
+# since "nodes" only exists in the core group.
+#
+# rbac.authorization.k8s.io is deliberately omitted: a ServiceAccount that can
+# create ClusterRoleBindings can grant itself node access anyway, which would
+# make this exclusion symbolic. If Jenkins ever needs to read (not write)
+# Roles/ClusterRoles for tooling reasons, add a read-only rule rather than
+# wildcarding this group.
+#
+# Note this is a soft boundary, not a hard one: a ServiceAccount that can
+# create Pods cluster-wide can still schedule a privileged/hostPID/hostNetwork
+# pod and reach the node from inside it. Enforcing an actual node boundary
+# requires admission control (Pod Security Admission, Gatekeeper, Kyverno,
+# etc.) on top of this RBAC grant, not RBAC alone.
+#
+# apiGroups list reflects what's installed on this cluster today
+# (`kubectl api-resources`) -- if a new API group / CRD (operator, etc.) is
+# added later, it must be appended here explicitly or it won't be covered.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: jenkins-cluster-manager
+rules:
+  - apiGroups: [""]
+    resources:
+      - bindings
+      - componentstatuses
+      - configmaps
+      - endpoints
+      - events
+      - limitranges
+      - namespaces
+      - namespaces/finalize
+      - namespaces/status
+      - persistentvolumeclaims
+      - persistentvolumeclaims/status
+      - persistentvolumes
+      - persistentvolumes/status
+      - pods
+      - pods/attach
+      - pods/binding
+      - pods/ephemeralcontainers
+      - pods/eviction
+      - pods/exec
+      - pods/log
+      - pods/portforward
+      - pods/proxy
+      - pods/resize
+      - pods/status
+      - podtemplates
+      - replicationcontrollers
+      - replicationcontrollers/scale
+      - replicationcontrollers/status
+      - resourcequotas
+      - resourcequotas/status
+      - secrets
+      - serviceaccounts
+      - serviceaccounts/token
+      - services
+      - services/proxy
+      - services/status
+    verbs: ["*"]
+  - apiGroups:
+      - apps
+      - batch
+      - autoscaling
+      - policy
+      - networking.k8s.io
+      - storage.k8s.io
+      - apiextensions.k8s.io
+      - admissionregistration.k8s.io
+      - apiregistration.k8s.io
+      - authentication.k8s.io
+      - authorization.k8s.io
+      - certificates.k8s.io
+      - coordination.k8s.io
+      - discovery.k8s.io
+      - events.k8s.io
+      - flowcontrol.apiserver.k8s.io
+      - node.k8s.io      # RuntimeClass etc. -- not the Node object itself
+      - resource.k8s.io
+      - scheduling.k8s.io
+      - argoproj.io
+    resources: ["*"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: jenkins-cluster-manager-binding
+subjects:
+  - kind: ServiceAccount
+    name: jenkins-deployer
+    namespace: jenkins
+roleRef:
+  kind: ClusterRole
+  name: jenkins-cluster-manager
+  apiGroup: rbac.authorization.k8s.io
