@@ -1,0 +1,17 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<flow-definition plugin="workflow-job@1571.1580.v18e46842c125">
+  <actions/>
+  <description>Managed by jenkins-config-scripts</description>
+  <keepDependencies>false</keepDependencies>
+  <properties/>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@4350.vcc65d4958821">
+    <script>node(&apos;ubuntu&apos;) {
+    stage (&apos;echo&apos;) {
+        sh &quot;echo hell-world&quot;
+    }
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>

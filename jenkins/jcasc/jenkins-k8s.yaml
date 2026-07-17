@@ -88,6 +88,13 @@ jenkins:
             memory: false
             mountPath: "/tmp"
         yamlMergeStrategy: "override"
+      - containers:
+        - args: "999999"
+          command: "sleep"
+          image: "ubuntu:latest"
+          name: "ubuntu"
+        label: "general-job"
+        name: "general-job"
   crumbIssuer: "standard"
   disableRememberMe: false
   disabledAdministrativeMonitors:
