@@ -1,0 +1,11 @@
+cloud_name: "kubernetes"
+templates:
+  - name: "helm-deploy"
+    label: "helm-deploy"
+    container_name: "helm"
+    image: "alpine/helm:latest"
+    command: "sleep"
+    args: "999999"
+    privileged: false
+    mountPath: "/tmp"
+    serviceAccount: "jenkins-deployer"

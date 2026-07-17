@@ -1,0 +1,14 @@
+cloud_name: "kubernetes"
+templates:
+  - name: "image-builder"
+    label: "image-builder"
+    container_name: "kaniko"
+    image: "gcr.io/kaniko-project/executor:debug"
+    command: "sleep"
+    args: "999999"
+    privileged: true
+    mountPath: "/workspace"
+    secretEnvVars:
+      - envVar: "PODMAN_AUTH"
+        secretName: "personal-dockerhub"
+        secretKey: "config"

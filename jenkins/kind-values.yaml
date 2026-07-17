@@ -15,3 +15,11 @@ extraObjects:
 
 persistence:
   storageClass: manual
+
+controller:
+  JCasC:
+    # jenkins/jcasc/jenkins-k8s.yaml (injected via the jenkins Application's
+    # fileParameters) is the single source of truth for JCasC now, so the
+    # chart's own auto-generated config is disabled to avoid both declaring
+    # jenkins.securityRealm / authorizationStrategy / etc.
+    defaultConfig: false
