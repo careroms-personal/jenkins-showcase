@@ -98,18 +98,6 @@ jenkins:
         id: "1e77a306-3958-486c-90bd-c5bf1450d861"
         label: "general-job"
         name: "general-job"
-  - kubernetes:
-      containerCap: 10
-      containerCapStr: "10"
-      jenkinsTunnel: "jenkins-agent.jenkins.svc.cluster.local:50000"
-      jenkinsUrl: "http://jenkins.jenkins.svc.cluster.local:8080"
-      name: "k8s-2"
-      namespace: "jenkins"
-      podLabels:
-      - key: "jenkins/jenkins-jenkins-agent"
-        value: "true"
-      serverUrl: "https://kubernetes.default"
-      templates:
       - containers:
         - args: "9999999"
           command: "sleep"
