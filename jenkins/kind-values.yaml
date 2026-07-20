@@ -19,6 +19,8 @@ persistence:
 controller:
   additionalPlugins:
     - blueocean
+    - uno-choice
+    - remote-file
 
   JCasC:
     # jenkins/jcasc/jenkins-k8s.yaml (injected via the jenkins Application's
