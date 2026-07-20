@@ -21,6 +21,7 @@ controller:
     - blueocean
     - uno-choice
     - remote-file
+    - pipeline-utility-steps
 
   JCasC:
     # jenkins/jcasc/jenkins-k8s.yaml (injected via the jenkins Application's
