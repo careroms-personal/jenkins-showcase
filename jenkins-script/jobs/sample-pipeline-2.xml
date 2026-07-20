@@ -9,7 +9,7 @@
         <org.biouno.unochoice.ChoiceParameter plugin="uno-choice@2.8.9">
           <name>BUILD_STEP_SELECT</name>
           <randomName>choice-parameter-4087630199237</randomName>
-          <visibleItemCount>2</visibleItemCount>
+          <visibleItemCount>1</visibleItemCount>
           <script class="org.biouno.unochoice.model.GroovyScript">
             <secureScript plugin="script-security@1402.1405.vc96e74964250">
               <script>return [&quot;Build Docker:selected&quot;,&quot;Helm Deploy:selected&quot;]</script>
@@ -22,7 +22,6 @@
           </script>
           <projectName>sample-pipeline-2</projectName>
           <projectFullName>sample-pipeline-2</projectFullName>
-          <cachedDefaultValue>Build Docker,Helm Deploy</cachedDefaultValue>
           <choiceType>PT_CHECKBOX</choiceType>
           <filterable>false</filterable>
           <filterLength>1</filterLength>
@@ -30,7 +29,7 @@
         <org.biouno.unochoice.ChoiceParameter plugin="uno-choice@2.8.9">
           <name>SELECT_STUPID_PROJECT</name>
           <randomName>choice-parameter-6556889469694</randomName>
-          <visibleItemCount>2</visibleItemCount>
+          <visibleItemCount>1</visibleItemCount>
           <script class="org.biouno.unochoice.model.GroovyScript">
             <secureScript plugin="script-security@1402.1405.vc96e74964250">
               <script>return [&quot;sheep-counting&quot;, &quot;terminal-clock&quot;]</script>
@@ -43,7 +42,6 @@
           </script>
           <projectName>sample-pipeline-2</projectName>
           <projectFullName>sample-pipeline-2</projectFullName>
-          <cachedDefaultValue>sheep-counting</cachedDefaultValue>
           <choiceType>PT_SINGLE_SELECT</choiceType>
           <filterable>false</filterable>
           <filterLength>1</filterLength>
