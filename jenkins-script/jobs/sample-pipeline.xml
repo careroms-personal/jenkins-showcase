@@ -5,9 +5,11 @@
   <keepDependencies>false</keepDependencies>
   <properties/>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@4350.vcc65d4958821">
-    <script>node(&apos;ubuntu&apos;) {
-    stage (&apos;echo&apos;) {
-        sh &quot;echo hell-world&quot;
+    <script>node(&apos;general-pipeline&apos;) {
+    container(&quot;ubuntu&quot;) {
+        stage (&apos;echo&apos;) {
+            sh &quot;echo hell-world&quot;
+        }
     }
 }</script>
     <sandbox>true</sandbox>
