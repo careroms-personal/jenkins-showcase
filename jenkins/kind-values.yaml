@@ -17,6 +17,9 @@ persistence:
   storageClass: manual
 
 controller:
+  additionalPlugins:
+    - blueocean
+
   JCasC:
     # jenkins/jcasc/jenkins-k8s.yaml (injected via the jenkins Application's
     # fileParameters) is the single source of truth for JCasC now, so the
