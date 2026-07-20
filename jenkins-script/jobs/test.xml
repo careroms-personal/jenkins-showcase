@@ -9,7 +9,7 @@
         <org.biouno.unochoice.ChoiceParameter plugin="uno-choice@2.8.9">
           <name>BUILD_STEP_SELECT</name>
           <randomName>choice-parameter-4087630199237</randomName>
-          <visibleItemCount>1</visibleItemCount>
+          <visibleItemCount>2</visibleItemCount>
           <script class="org.biouno.unochoice.model.GroovyScript">
             <secureScript plugin="script-security@1402.1405.vc96e74964250">
               <script>return [&quot;Build Docker:selected&quot;,&quot;Helm Deploy:selected&quot;]</script>
@@ -29,10 +29,10 @@
         <org.biouno.unochoice.ChoiceParameter plugin="uno-choice@2.8.9">
           <name>SELECT_STUPID_PROJECT</name>
           <randomName>choice-parameter-6556889469694</randomName>
-          <visibleItemCount>1</visibleItemCount>
+          <visibleItemCount>3</visibleItemCount>
           <script class="org.biouno.unochoice.model.GroovyScript">
             <secureScript plugin="script-security@1402.1405.vc96e74964250">
-              <script>return [&quot;sheep-counting&quot;, &quot;terminal-clock&quot;]</script>
+              <script>return [&quot;sheep-counting&quot;, &quot;terminal-clock&quot;,&quot;get-time&quot;]</script>
               <sandbox>true</sandbox>
             </secureScript>
             <secureFallbackScript plugin="script-security@1402.1405.vc96e74964250">
