@@ -1,8 +1,7 @@
 apiVersion: external-secrets.io/v1
-kind: SecretStore
+kind: ClusterSecretStore
 metadata:
   name: vault-backend
-  namespace: jenkins
 spec:
   provider:
     vault:
@@ -13,7 +12,8 @@ spec:
         type: Secret
         name: vault-tls
         key: ca.crt
+        namespace: vault   # ClusterSecretStore needs this explicit, since it has no inherent namespace
       auth:
         kubernetes:
           mountPath: "kubernetes"
-          role: "eso-jenkins"
+          role: "eso-controller"
