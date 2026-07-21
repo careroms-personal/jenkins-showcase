@@ -1,0 +1,2 @@
+tcp:
+  "3306": "datastore/example-mysql-cluster-mysql:3306"
