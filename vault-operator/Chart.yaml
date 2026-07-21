@@ -1,0 +1,23 @@
+apiVersion: v2
+type: application
+name: vault-operator
+version: 0.0.0
+appVersion: latest
+description: Kubernetes operator for Hashicorp Vault
+icon: https://avatars.githubusercontent.com/u/129937617
+keywords:
+  - vault
+  - hashicorp
+  - secret
+  - operator
+home: https://bank-vaults.dev
+sources:
+  - https://github.com/hashicorp/vault
+  - https://github.com/bank-vaults/vault-operator
+maintainers:
+  - name: Bank Vaults Maintainers
+    email: team@bank-vaults.dev
+dependencies:
+  - name: crds
+    version: 0.0.0
+    condition: crds.install
