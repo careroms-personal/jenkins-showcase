@@ -1,0 +1,19 @@
+apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: vault-backend
+  namespace: jenkins
+spec:
+  provider:
+    vault:
+      server: "https://vault.vault.svc.cluster.local:8200"
+      path: "secret"
+      version: "v2"
+      caProvider:
+        type: Secret
+        name: vault-tls
+        key: ca.crt
+      auth:
+        kubernetes:
+          mountPath: "kubernetes"
+          role: "eso-jenkins"

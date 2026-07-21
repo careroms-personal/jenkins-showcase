@@ -1,0 +1,15 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: mysql-test-node
+  namespace: jenkins
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: vault-backend
+    kind: SecretStore
+  target:
+    name: mysql-test-node-secret
+  dataFrom:
+    - extract:
+        key: local-k8s/jenkins/mysql-test-node
