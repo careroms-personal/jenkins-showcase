@@ -339,7 +339,7 @@ manager:
 ## @param dataProtection.enabled - set the dataProtection controllers for backup functions
 ## @param dataProtection.gcFrequencySeconds - the frequency of garbage collection
 dataProtection:
-  enabled: true
+  enabled: false
   leaderElectId: ""
   # customizing the encryption key is strongly recommended.
   # if you do not specify a custom key, the default key will be used.

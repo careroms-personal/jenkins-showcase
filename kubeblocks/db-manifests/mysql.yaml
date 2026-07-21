@@ -2,7 +2,7 @@ apiVersion: apps.kubeblocks.io/v1
 kind: Cluster
 metadata:
   name: example-mysql-cluster
-  namespace: demo
+  namespace: datastore
 spec:
   clusterDef: mysql
   topology: semisync        # semi-synchronous replication: 1 primary + N candidates
