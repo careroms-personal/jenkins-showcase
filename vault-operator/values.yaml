@@ -89,7 +89,7 @@ crds:
     # See the [reference](https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/) for details.
     serviceAccount:
       create: true
-      name: ""
+      name: "vault"
       annotations: {}
       labels: {}
       automountServiceAccountToken: true
