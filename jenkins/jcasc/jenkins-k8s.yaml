@@ -239,6 +239,9 @@ appearance:
     }
   prism:
     theme: PRISM
+  themeManager:
+    disableUserThemes: false
+    theme: "noOp"
 security:
   apiToken:
     creationOfLegacyTokenEnabled: false
