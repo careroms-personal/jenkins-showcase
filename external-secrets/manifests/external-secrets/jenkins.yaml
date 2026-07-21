@@ -12,4 +12,4 @@ spec:
     name: mysql-test-node-secret
   dataFrom:
     - extract:
-        key: local-k8s/jenkins/mysql-test-node
+        key: jenkins/mysql-test-node

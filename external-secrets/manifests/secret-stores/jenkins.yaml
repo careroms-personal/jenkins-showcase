@@ -6,7 +6,7 @@ spec:
   provider:
     vault:
       server: "https://vault.vault.svc.cluster.local:8200"
-      path: "secret"
+      path: "local-k8s"
       version: "v2"
       caProvider:
         type: Secret
