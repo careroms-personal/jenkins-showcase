@@ -63,7 +63,7 @@ If the K8s version is 1.15 at least, the default `objectSelector` will prevent t
 **You have to do this only in case you are using Helm < 3.2 and Kubernetes < 1.15.**
 
 ```bash
-WEBHOOK_NS=${WEBHOOK_NS:-vswh}
+WEBHOOK_NS=${WEBHOOK_NS:-vault}
 kubectl create namespace "${WEBHOOK_NS}"
 kubectl label namespace "${WEBHOOK_NS}" name="${WEBHOOK_NS}"
 ```
@@ -71,7 +71,7 @@ kubectl label namespace "${WEBHOOK_NS}" name="${WEBHOOK_NS}"
 ### Install the chart
 
 ```bash
-helm install vswh --namespace vswh --wait oci://ghcr.io/bank-vaults/helm-charts/vault-secrets-webhook --create-namespace
+helm install vault-secrets-webhook --namespace vault --wait oci://ghcr.io/bank-vaults/helm-charts/vault-secrets-webhook --create-namespace
 ```
 
 ### Openshift 4.3
@@ -79,7 +79,7 @@ helm install vswh --namespace vswh --wait oci://ghcr.io/bank-vaults/helm-charts/
 For security reasons, the `runAsUser` must be in the range between 1000570000 and 1000579999. By setting the value of `securityContext.runAsUser` to `""`, OpenShift chooses a valid User.
 
 ```bash
-helm upgrade --namespace vswh --install vswh oci://ghcr.io/bank-vaults/helm-charts/vault-secrets-webhook --set-string securityContext.runAsUser="" --create-namespace
+helm upgrade --namespace vault --install vault-secrets-webhook oci://ghcr.io/bank-vaults/helm-charts/vault-secrets-webhook --set-string securityContext.runAsUser="" --create-namespace
 ```
 
 ### About GKE Private Clusters

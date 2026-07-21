@@ -2,6 +2,7 @@ apiVersion: "vault.banzaicloud.com/v1alpha1"
 kind: "Vault"
 metadata:
   name: "vault"
+  namespace: "vault"
   labels:
     app.kubernetes.io/name: vault
     vault_cr: vault
@@ -134,7 +135,7 @@ spec:
       # This is 3 by default
       secretThreshold: 3
     kubernetes:
-      secretNamespace: default
+      secretNamespace: vault
 
   # A YAML representation of a final vault config file.
   # See https://www.vaultproject.io/docs/configuration/ for more information.
@@ -183,7 +184,7 @@ spec:
           # Allow every pod in the default namespace to use the secret kv store
           - name: default
             bound_service_account_names: ["default", "secrets-webhook"]
-            bound_service_account_namespaces: ["default", "vswh"]
+            bound_service_account_namespaces: ["vault"]
             policies: allow_secrets
             ttl: 1h
 
