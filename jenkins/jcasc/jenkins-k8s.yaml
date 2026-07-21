@@ -147,12 +147,30 @@ jenkins:
             optional: false
             secretName: "personal-dockerhub"
         yamlMergeStrategy: "override"
+      - containers:
+        - args: "9999999"
+          command: "sleep"
+          image: "gcc:13-bookworm"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "gcc-13"
+          workingDir: "/home/jenkins/agent"
+        id: "f1072b68-2f74-4a24-be6f-69d84b3fce6b"
+        label: "cpp-run-test"
+        name: "cpp-run-test"
+        namespace: "jenkins"
+        yamlMergeStrategy: "override"
   crumbIssuer: "standard"
   disableRememberMe: false
   disabledAdministrativeMonitors:
   - "hudson.diagnosis.ReverseProxySetupMonitor"
   labelAtoms:
   - name: "built-in"
+  - name: "cpp-run-test"
   - name: "general-job"
   - name: "general-pipeline"
   - name: "helm-deploy"
@@ -187,20 +205,6 @@ jenkins:
       allowsSignup: false
       enableCaptcha: false
       users:
-      - id: "admin"
-        name: "Jenkins Admin"
-        properties:
-        - "favorite"
-        - "consoleUrlProvider"
-        - "viewsTabBar"
-        - "mailer"
-        - myView:
-            viewsTabBar: "standard"
-        - preferredProvider:
-            providerId: "default"
-        - "timezone"
-        - "experimentalFlags"
-        - "apiToken"
       - id: "jenkins"
         name: "jenkins"
         properties:
@@ -258,6 +262,11 @@ security:
   queueItemAuthenticator: {
     }
   scriptApproval:
+    approvedSignatures:
+    - "method hudson.model.Run getParent"
+    - "method jenkins.plugins.git.AbstractGitSCMSource getRemote"
+    - "method jenkins.scm.api.SCMSourceOwner getSCMSources"
+    - "method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper getRawBuild"
     forceSandbox: false
   updateSiteWarningsConfiguration: {
     }
