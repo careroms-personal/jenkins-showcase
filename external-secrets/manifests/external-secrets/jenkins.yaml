@@ -1,0 +1,15 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: mysql-test-node
+  namespace: jenkins
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: vault-backend
+    kind: ClusterSecretStore   # <-- this line is the fix
+  target:
+    name: mysql-test-node-secret
+  dataFrom:
+    - extract:
+        key: jenkins/mysql-test-node

@@ -164,6 +164,54 @@ jenkins:
         name: "cpp-run-test"
         namespace: "jenkins"
         yamlMergeStrategy: "override"
+      - containers:
+        - args: "9999999"
+          command: "sleep"
+          envVars:
+          - envVar:
+              key: "DB_USER"
+              value: "hello"
+          - envVar:
+              key: "DB_PASSWORD"
+              value: "it-me"
+          - envVar:
+              key: "DB_NAME"
+              value: "test-db"
+          image: "gcc:13-bookworm"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "gcc-13"
+          workingDir: "/home/jenkins/agent"
+        - envVars:
+          - envVar:
+              key: "MYSQL_USER"
+              value: "hello"
+          - envVar:
+              key: "MYSQL_ROOT_PASSWORD"
+              value: "it-me"
+          - envVar:
+              key: "MYSQL_PASSWORD"
+              value: "it-me"
+          - envVar:
+              key: "MYSQL_DATABASE"
+              value: "test-db"
+          image: "mysql:8.0.35"
+          livenessProbe:
+            failureThreshold: 0
+            initialDelaySeconds: 0
+            periodSeconds: 0
+            successThreshold: 0
+            timeoutSeconds: 0
+          name: "mysql"
+          workingDir: "/home/jenkins/agent"
+        id: "90f117bf-f246-464d-9a63-f05dd77cac50"
+        label: "cpp-run-test-with-db"
+        name: "cpp-run-test-with-db"
+        yamlMergeStrategy: "override"
   crumbIssuer: "standard"
   disableRememberMe: false
   disabledAdministrativeMonitors:
@@ -171,6 +219,7 @@ jenkins:
   labelAtoms:
   - name: "built-in"
   - name: "cpp-run-test"
+  - name: "cpp-run-test-with-db"
   - name: "general-job"
   - name: "general-pipeline"
   - name: "helm-deploy"
@@ -208,6 +257,8 @@ jenkins:
       - id: "jenkins"
         name: "jenkins"
         properties:
+        - theme:
+            theme: "noOp"
         - "apiToken"
         - "consoleUrlProvider"
         - "viewsTabBar"
