@@ -1,0 +1,6 @@
+apiVersion: v2
+name: keycloaked
+description: Private Helm chart for a self-hosted Keycloak + Postgres on the homelab cluster
+type: application
+version: 0.1.0
+appVersion: "26.7.0"

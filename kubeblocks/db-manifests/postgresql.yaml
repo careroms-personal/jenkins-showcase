@@ -1,0 +1,29 @@
+apiVersion: apps.kubeblocks.io/v1
+kind: Cluster
+metadata:
+  name: example-postgresql-cluster
+  namespace: datastore
+spec:
+  clusterDef: postgresql
+  topology: replication      # Patroni-based replication: 1 primary + N replicas
+  terminationPolicy: Delete
+  componentSpecs:
+    - name: postgresql
+      serviceVersion: 17.5.0
+      replicas: 3            # 1 primary + 2 replicas
+      resources:
+        limits:
+          cpu: '1'
+          memory: 1Gi
+        requests:
+          cpu: '0.5'
+          memory: 0.5Gi
+      volumeClaimTemplates:
+        - name: data
+          spec:
+            storageClassName: ""
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 20Gi

@@ -1,0 +1,38 @@
+# Default values for keycloaked.
+
+keycloak:
+  replicaCount: 2
+
+  image:
+    repository: quay.io/keycloak/keycloak
+    tag: "26.7.0"
+
+  admin:
+    username: admin
+    password: admin
+
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2000Mi
+    requests:
+      cpu: 500m
+      memory: 1700Mi
+
+postgres:
+  # Shared Postgres instance -- not deployed by this chart.
+  # Secret must already exist (created outside this chart) with the keys below.
+  existingSecret: postgres-credentials
+  secretKeys:
+    host: host
+    database: database
+    username: username
+    password: password
+
+ingress:
+  enabled: true
+  className: nginx
+  host: keycloaked.my-ubuntu.hello
+  tls:
+    enabled: false
+    secretName: ""
