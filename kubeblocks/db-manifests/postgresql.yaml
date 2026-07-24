@@ -11,6 +11,15 @@ spec:
     - name: postgresql
       serviceVersion: 17.5.0
       replicas: 3            # 1 primary + 2 replicas
+      # Requires the "postgres-credentials" secret (key: password) to already exist in this
+      # namespace before the cluster is created -- pending Vault/ESO sync. secretRef is
+      # immutable once set, so this only takes effect on cluster creation, not on an update.
+      systemAccounts:
+        - name: postgres
+          secretRef:
+            name: postgres-credentials
+            namespace: datastore
+            password: password
       resources:
         limits:
           cpu: '1'
